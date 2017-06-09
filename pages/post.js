@@ -7,6 +7,15 @@ class Post extends Component {
   	super(props);
   	this.state = {};
   }
+  static async getInitialProps(context) {
+    const { id } = context.query
+    const res = await fetch(`http://api.tvmaze.com/shows/${id}`)
+    const show = await res.json()
+
+    console.log(`Fetched show: ${show.name}`)
+
+    return { show }
+  }
   render(){
     return(
       <Layout>
@@ -16,16 +25,6 @@ class Post extends Component {
       </Layout>
     );
   }
-}
-
-Post.getInitialProps = async function (context) {
-  const { id } = context.query
-  const res = await fetch(`http://api.tvmaze.com/shows/${id}`)
-  const show = await res.json()
-
-  console.log(`Fetched show: ${show.name}`)
-
-  return { show }
 }
 
 export default Post

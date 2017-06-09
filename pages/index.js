@@ -8,6 +8,16 @@ class App extends Component {
     super(props);
     this.state = {};
   }
+  static async getInitialProps(context) {
+    const res = await fetch('http://api.tvmaze.com/search/shows?q=batman')
+    const data = await res.json()
+
+    console.log(`Show data fetched. Count: ${data.length}`)
+
+    return {
+      shows: data
+    }
+  }
   render() {
     return (
       <Layout>
@@ -21,19 +31,31 @@ class App extends Component {
             </li>
           ))}
         </ul>
+        <style jsx>{`
+      h1, a {
+        font-family: "Arial";
+      }
+
+      ul {
+        padding: 0;
+      }
+
+      li {
+        list-style: none;
+        margin: 5px 0;
+      }
+
+      a {
+        text-decoration: none;
+        color: blue;
+      }
+
+      a:hover {
+        opacity: 0.6;
+      }
+    `}</style>
       </Layout>
     );
-  }
-}
-
-App.getInitialProps = async function() {
-  const res = await fetch('http://api.tvmaze.com/search/shows?q=batman')
-  const data = await res.json()
-
-  console.log(`Show data fetched. Count: ${data.length}`)
-
-  return {
-    shows: data
   }
 }
 

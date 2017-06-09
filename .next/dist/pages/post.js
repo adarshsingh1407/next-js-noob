@@ -67,63 +67,66 @@ var Post = function (_Component) {
       return _react2.default.createElement(_MyLayout2.default, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 12
+          lineNumber: 21
         }
       }, _react2.default.createElement('h1', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 13
+          lineNumber: 22
         }
       }, this.props.show.name), _react2.default.createElement('p', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 14
+          lineNumber: 23
         }
       }, this.props.show.summary.replace(/<[/]?p>/g, '')), _react2.default.createElement('img', { src: this.props.show.image.medium, __source: {
           fileName: _jsxFileName,
-          lineNumber: 15
+          lineNumber: 24
         }
       }));
     }
+  }], [{
+    key: 'getInitialProps',
+    value: function () {
+      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(context) {
+        var id, res, show;
+        return _regenerator2.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                id = context.query.id;
+                _context.next = 3;
+                return (0, _isomorphicUnfetch2.default)('http://api.tvmaze.com/shows/' + id);
+
+              case 3:
+                res = _context.sent;
+                _context.next = 6;
+                return res.json();
+
+              case 6:
+                show = _context.sent;
+
+                console.log('Fetched show: ' + show.name);
+
+                return _context.abrupt('return', { show: show });
+
+              case 9:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function getInitialProps(_x) {
+        return _ref.apply(this, arguments);
+      }
+
+      return getInitialProps;
+    }()
   }]);
 
   return Post;
 }(_react.Component);
-
-Post.getInitialProps = function () {
-  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(context) {
-    var id, res, show;
-    return _regenerator2.default.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            id = context.query.id;
-            _context.next = 3;
-            return (0, _isomorphicUnfetch2.default)('http://api.tvmaze.com/shows/' + id);
-
-          case 3:
-            res = _context.sent;
-            _context.next = 6;
-            return res.json();
-
-          case 6:
-            show = _context.sent;
-
-            console.log('Fetched show: ' + show.name);
-
-            return _context.abrupt('return', { show: show });
-
-          case 9:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, this);
-  }));
-
-  return function (_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
 
 exports.default = Post;
