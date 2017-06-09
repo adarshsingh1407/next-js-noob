@@ -1,24 +1,39 @@
 import Layout from '../components/MyLayout.js'
 import Link from 'next/link'
-import React, { Component } from 'react'
-import PostLink from '../components/PostLink'
+import React, {Component} from 'react'
+import fetch from 'isomorphic-unfetch'
 
 class App extends Component {
-  constructor(props){
-  	super(props);
-  	this.state = {};
+  constructor(props) {
+    super(props);
+    this.state = {};
   }
-  render(){
-    return(
+  render() {
+    return (
       <Layout>
-        <h1>My Blog</h1>
+        <h1>Batman TV Shows</h1>
         <ul>
-          <PostLink id="hello-nextjs" title="Hello NextJS"/>
-          <PostLink id="hello-adarsh" title="Hello Adarsh"/>
-          <PostLink id="hello-kanika" title="Hello Kanika"/>
+          {this.props.shows.map(({show}) => (
+            <li key={show.id}>
+              <Link as={`/p/${show.id}`} href={`/post?id=${show.id}`}>
+                <a>{show.name}</a>
+              </Link>
+            </li>
+          ))}
         </ul>
       </Layout>
     );
+  }
+}
+
+App.getInitialProps = async function() {
+  const res = await fetch('http://api.tvmaze.com/search/shows?q=batman')
+  const data = await res.json()
+
+  console.log(`Show data fetched. Count: ${data.length}`)
+
+  return {
+    shows: data
   }
 }
 
